@@ -5,17 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script defer src="index.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <main id="main">
       <div class="wrapper">
         <nav class="navigation">
-          <ul class="nav__list">
-            <li class="nav__item"><a href="#">Home</a></li>
-            <li class="nav__item"><a href="#">Products</a></li>
-            <li class="nav__item"><a href="#">About</a></li>
-          </ul>
+          <div class="burger__menu">
+            <input id="menu__toggle" type="checkbox" />
+            <label class="menu__btn" for="menu__toggle">
+              <span></span>
+            </label>
+            <ul class="nav__list">
+              <li><a class="nav__item" href="#">Home</a></li>
+              <li><a class="nav__item" href="#">Products</a></li>
+              <li><a class="nav__item" href="#">Articles</a></li>
+              <li><a class="nav__item" href="#">News</a></li>
+              <li><a class="nav__item" href="#">About</a></li>
+              <li><a class="nav__item" href="#">Our team</a></li>
+            </ul>
+          </div>
         </nav>
         <div class="content">
           <header class="header"><h1>HEADER</h1></header>
@@ -50,20 +60,80 @@
               Exercitationem at mollitia explicabo vero rem asperiores dolorum debitis eum ipsam.
               Animi magnam voluptates officia veniam aut, odit repellat tenetur minima suscipit?
             </article>
+            <article class="article">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem at mollitia
+              explicabo vero rem asperiores dolorum debitis eum ipsam. Animi magnam voluptates
+              officia veniam aut, odit repellat tenetur minima suscipit? Lorem ipsum dolor, sit amet
+              consectetur adipisicing elit. Exercitationem at mollitia explicabo vero rem asperiores
+              dolorum debitis eum ipsam. Animi magnam voluptates officia veniam aut, odit repellat
+              tenetur minima suscipit? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Exercitationem at mollitia explicabo vero rem asperiores dolorum debitis eum ipsam.
+              Animi magnam voluptates officia veniam aut, odit repellat tenetur minima suscipit?
+            </article>
+            <article class="article">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem at mollitia
+              explicabo vero rem asperiores dolorum debitis eum ipsam. Animi magnam voluptates
+              officia veniam aut, odit repellat tenetur minima suscipit? Lorem ipsum dolor, sit amet
+              consectetur adipisicing elit. Exercitationem at mollitia explicabo vero rem asperiores
+              dolorum debitis eum ipsam. Animi magnam voluptates officia veniam aut, odit repellat
+              tenetur minima suscipit? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Exercitationem at mollitia explicabo vero rem asperiores dolorum debitis eum ipsam.
+              Animi magnam voluptates officia veniam aut, odit repellat tenetur minima suscipit?
+            </article>
+            <article class="article">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem at mollitia
+              explicabo vero rem asperiores dolorum debitis eum ipsam. Animi magnam voluptates
+              officia veniam aut, odit repellat tenetur minima suscipit? Lorem ipsum dolor, sit amet
+              consectetur adipisicing elit. Exercitationem at mollitia explicabo vero rem asperiores
+              dolorum debitis eum ipsam. Animi magnam voluptates officia veniam aut, odit repellat
+              tenetur minima suscipit? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Exercitationem at mollitia explicabo vero rem asperiores dolorum debitis eum ipsam.
+              Animi magnam voluptates officia veniam aut, odit repellat tenetur minima suscipit?
+            </article>
+            <article class="article">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem at mollitia
+              explicabo vero rem asperiores dolorum debitis eum ipsam. Animi magnam voluptates
+              officia veniam aut, odit repellat tenetur minima suscipit? Lorem ipsum dolor, sit amet
+              consectetur adipisicing elit. Exercitationem at mollitia explicabo vero rem asperiores
+              dolorum debitis eum ipsam. Animi magnam voluptates officia veniam aut, odit repellat
+              tenetur minima suscipit? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Exercitationem at mollitia explicabo vero rem asperiores dolorum debitis eum ipsam.
+              Animi magnam voluptates officia veniam aut, odit repellat tenetur minima suscipit?
+            </article>
+            <article class="article">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Exercitationem at mollitia
+              explicabo vero rem asperiores dolorum debitis eum ipsam. Animi magnam voluptates
+              officia veniam aut, odit repellat tenetur minima suscipit? Lorem ipsum dolor, sit amet
+              consectetur adipisicing elit. Exercitationem at mollitia explicabo vero rem asperiores
+              dolorum debitis eum ipsam. Animi magnam voluptates officia veniam aut, odit repellat
+              tenetur minima suscipit? Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Exercitationem at mollitia explicabo vero rem asperiores dolorum debitis eum ipsam.
+              Animi magnam voluptates officia veniam aut, odit repellat tenetur minima suscipit?
+            </article>
           </section>
           <aside class="aside">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, ex cumque! In, natus
-              officia?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, ex cumque! In, natus
-              officia?
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo, ex cumque! In, natus
-              officia?
-            </p>
+            <div class="tab">
+              <input type="checkbox" id="chck1" />
+              <label class="tab-label" for="chck1">Article 1</label>
+              <div class="tab-content">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!
+              </div>
+            </div>
+            <div class="tab">
+              <input type="checkbox" id="chck2" />
+              <label class="tab-label" for="chck2">Article 2</label>
+              <div class="tab-content">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. A, in!
+              </div>
+            </div>
+            <div class="dropdown">
+              <button class="dropbtn">Dropdown</button>
+              <div class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </div>
+            </div>
           </aside>
           <footer class="footer">FOOTER</footer>
         </div>
