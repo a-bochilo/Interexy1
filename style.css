@@ -98,6 +98,7 @@ main {
   min-height: 100vh;
   display: flex;
   column-gap: 15px;
+  justify-content: center;
 }
 
 nav.navigation {
@@ -144,7 +145,7 @@ nav > ul {
   max-height: 150px;
   align-items: center;
   justify-content: center;
-  background-color: rgb(81, 102, 68);
+  background-color: #516644;
 }
 
 .article__wrapper {
@@ -160,7 +161,7 @@ nav > ul {
 }
 
 .article {
-  background: rgb(104, 40, 40);
+  background: #682828;
   padding: 10px;
   width: 30%;
   min-width: 200px;
@@ -179,7 +180,7 @@ nav > ul {
   row-gap: 10px;
   margin: 15px 0;
   padding: 10px;
-  background-color: rgb(239, 91, 91);
+  background-color: #ef5b5b;
   min-width: 130px;
 }
 
@@ -191,11 +192,10 @@ nav > ul {
   height: 20%;
   min-height: 50px;
   max-height: 150px;
-
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(118, 88, 157);
+  background-color: #76589d;
 }
 
 /*==================*/
@@ -260,7 +260,7 @@ nav > ul {
 .nav__item {
   display: block;
   padding: 12px 24px;
-  color: rgb(255, 255, 255);
+  color: #ffffff;
   font-weight: 600;
 }
 
@@ -297,13 +297,13 @@ nav > ul {
   display: flex;
   justify-content: space-between;
   padding: 15px;
-  background: rgb(249, 127, 127);
+  background: #f97f7f;
   font-weight: bold;
   cursor: pointer;
 }
 
 .tab-label:hover {
-  background: rgb(243, 60, 60);
+  background: #f33c3c;
 }
 
 .tab-label::after {
@@ -321,7 +321,7 @@ nav > ul {
 }
 
 input:checked + .tab-label {
-  background: rgb(135, 69, 69);
+  background: #874545;
 }
 
 input:checked + .tab-label::after {
@@ -352,7 +352,7 @@ input:checked ~ .tab-content {
   position: absolute;
   background-color: #e7fcff;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 16px 0px #00000033;
   z-index: 1;
 }
 
@@ -364,7 +364,7 @@ input:checked ~ .tab-content {
 }
 
 .dropdown-content a:hover {
-  background-color: rgb(148, 207, 255);
+  background-color: #94cfff;
 }
 
 .dropdown:hover .dropdown-content {
