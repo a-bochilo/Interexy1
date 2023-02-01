@@ -1,7 +1,95 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Roboto:ital,wght@0,300;0,400;0,500;1,400&display=swap");
 
-@import "./reset.css";
+/* Reset */
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
 
+*,
+*:before,
+*:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+:focus,
+:active {
+    outline: none;
+}
+
+a:focus,
+a:active {
+    outline: none;
+}
+
+nav,
+footer,
+header,
+aside {
+    display: block;
+}
+
+html,
+body {
+    min-height: 100vh;
+    font-size: 100%;
+    line-height: 1;
+    font-size: 14px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+input,
+button,
+textarea {
+    font-family: inherit;
+}
+
+input::-ms-clear {
+    display: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+button::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}
+
+a,
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-size: inherit;
+    font-weight: 400;
+}
+
+/*=====================*/
 body {
     font-family: "DM Sans", sans-serif;
     font-family: "Roboto", sans-serif;
@@ -9,37 +97,30 @@ body {
 }
 
 main {
-    max-width: 1330px;
-    min-height: 100vh;
-    margin: 0 auto;
-    padding: 0 15px;
     color: #f2f3f4;
 }
 
-.wrapper {
-    min-height: 100vh;
+main div.wrapper {
     display: flex;
-    column-gap: 15px;
+    /* column-gap: 15px; */
     justify-content: center;
+    align-items: space-between;
+    min-height: 100vh;
 }
 
 nav.navigation {
     position: relative;
-    overflow: hidden;
-    width: 10%;
-    min-width: 100px;
-    padding: 10px 0 0 10px;
     background-color: #563d3d;
     transition: all 0.3s ease-in-out;
     -webkit-box-shadow: 4px 1px 31px 1px #563d3d;
     -moz-box-shadow: 4px 1px 31px 1px #563d3d;
     box-shadow: 4px 1px 31px 1px #563d3d;
+    min-height: 100%;
 }
 
 nav > ul {
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 .nav__list > li > a {
@@ -47,13 +128,12 @@ nav > ul {
     color: #f2f3f4;
 }
 
-.content {
-    width: 80%;
-    min-height: 100%;
+div.content {
     position: relative;
-
+    padding: 0 15px;
     display: flex;
     flex-direction: column;
+    min-height: 100%;
     justify-content: space-between;
 }
 
@@ -61,31 +141,28 @@ nav > ul {
     position: sticky;
     top: 0;
     z-index: 10;
-    height: 20%;
     display: flex;
-    min-height: 50px;
-    max-height: 150px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     background-color: #516644;
+    padding: 20px 0;
 }
 
 .article__wrapper {
-    max-width: 70%;
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
     padding: 15px 0;
-    height: 100%;
-    align-items: center;
+    align-items: top;
     justify-content: center;
     align-content: flex-start;
+    min-height: 100%;
 }
 
 .article {
     background: #682828;
     padding: 10px;
-    width: 30%;
+    max-width: 400px;
     min-width: 200px;
     justify-content: center;
     flex-grow: 1;
@@ -94,16 +171,16 @@ nav > ul {
 .wrapper__content {
     display: flex;
     gap: 15px;
+    height: 100%;
 }
 
 .aside {
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
-    margin: 15px 0;
-    padding: 10px;
+    padding: 15px;
     background-color: #ef5b5b;
     min-width: 130px;
+    min-height: 100%;
 }
 
 .aside > p {
@@ -111,9 +188,8 @@ nav > ul {
 }
 
 .footer {
-    height: 20%;
     min-height: 50px;
-    max-height: 150px;
+    min-width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -149,16 +225,18 @@ nav > ul {
 .menu__btn > span::before,
 .menu__btn > span::after {
     display: block;
-    position: absolute;
+    position: relative;
     width: 100%;
     height: 2px;
     background-color: #ffffff;
     transition: all 0.3s ease-in-out;
 }
+
 .menu__btn > span::before {
     content: "";
     top: -8px;
 }
+
 .menu__btn > span::after {
     content: "";
     top: 8px;
@@ -166,15 +244,11 @@ nav > ul {
 
 .nav__list {
     display: flex;
-    position: absolute;
     flex-direction: column;
     align-items: flex-start;
-    visibility: hidden;
-    top: 0;
-    left: -100%;
-    width: auto;
-    height: 100%;
     margin: 0;
+    visibility: hidden;
+    opacity: 0;
     transition: all 0.3s ease-in-out;
     transition-delay: 0.1s;
 }
@@ -189,17 +263,23 @@ nav > ul {
 #menu__toggle:checked ~ .menu__btn > span {
     transform: rotate(45deg);
 }
+
 #menu__toggle:checked ~ .menu__btn > span::before {
     top: 0;
     transform: rotate(0);
 }
+
 #menu__toggle:checked ~ .menu__btn > span::after {
     top: 0;
     transform: rotate(90deg);
 }
+
 #menu__toggle:checked ~ .nav__list {
+    min-width: 200px;
     visibility: visible;
-    left: 0;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0.1s;
 }
 
 /*Accordion*/
@@ -261,17 +341,18 @@ input:checked ~ .tab-content {
     color: #f2f3f4;
     padding: 16px;
     border: none;
+    min-width: 100%;
 }
 
 .dropdown {
     position: relative;
     display: inline-block;
-    width: min-content;
+    min-width: 160px;
 }
 
 .dropdown-content {
     display: none;
-    position: absolute;
+    position: relative;
     background-color: #e7fcff;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px #00000033;
@@ -291,10 +372,48 @@ input:checked ~ .tab-content {
 
 .dropdown:hover .dropdown-content {
     display: block;
-    transition: all 2s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .dropdown:hover .dropbtn {
     background-color: #5876c9;
     transition: all 0.3s ease-in-out;
+}
+
+@media screen and (max-width: 640px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .wrapper__content {
+        flex-direction: column-reverse;
+    }
+
+    #menu__toggle ~ .nav__list {
+        height: 50px;
+        min-width: 100%;
+    }
+
+    #menu__toggle:checked ~ .nav__list {
+        height: auto;
+    }
+
+    .header {
+        flex-flow: column;
+        gap: 10px;
+        padding-bottom: 0;
+    }
+
+    .dropdown {
+        min-width: 100%;
+    }
+
+    .dropdown:focus .dropdown-content {
+        display: block;
+        transition: all 0.3s ease-in-out;
+    }
+    .dropdown:focus .dropbtn {
+        background-color: #5876c9;
+        transition: all 0.3s ease-in-out;
+    }
 }
