@@ -1,0 +1,336 @@
+@import "reset.css";
+@import "variables";
+@import "mixins";
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&family=Roboto:ital,wght@0,300;0,400;0,500;1,400&display=swap");
+
+/*=====================*/
+body {
+    font-family: $main-font;
+    background-color: $bg-body;
+}
+
+main {
+    color: $bg-main;
+}
+
+main div.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: space-between;
+    min-height: 100vh;
+}
+
+nav {
+    .navigation {
+        position: relative;
+        background-color: $bg-nav;
+        transition: all 0.3s ease-in-out;
+        min-height: 100%;
+        @include box-shad(4px 1px 31px 1px $bg-nav);
+    }
+    & > ul {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.nav__list > li > a {
+    text-decoration: none;
+    color: $bg-main;
+}
+
+div.content {
+    position: relative;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    justify-content: space-between;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: $bg-header;
+    padding: 20px 0;
+}
+
+.article {
+    background: $bg-article;
+    padding: 10px;
+    max-width: 400px;
+    min-width: 200px;
+    justify-content: center;
+    flex-grow: 1;
+
+    &__wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px 0;
+        align-items: top;
+        justify-content: center;
+        align-content: flex-start;
+        min-height: 100%;
+    }
+}
+
+.wrapper__content {
+    display: flex;
+    gap: 15px;
+    height: 100%;
+}
+
+.aside {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: $bg-aside;
+    min-width: 130px;
+    min-height: 100%;
+
+    p {
+        font-style: italic;
+    }
+}
+
+.footer {
+    min-height: 50px;
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $bg-footer;
+}
+
+/*==================*/
+
+#menu__toggle {
+    opacity: 0;
+    position: absolute;
+    top: 20px;
+    left: 100%;
+    transform: translateX(-120%);
+    width: 25px;
+    height: 25px;
+}
+
+.menu__btn {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 20px;
+    left: 100%;
+    transform: translateX(-120%);
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 5;
+
+    span,
+    span::before,
+    span::after {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: #ffffff;
+        transition: all 0.3s;
+    }
+    span::before {
+        content: "";
+        top: -8px;
+    }
+    span::after {
+        content: "";
+        top: 8px;
+    }
+}
+
+.nav__list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 50px;
+    margin: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s;
+    transition-delay: 0.1s;
+}
+
+.nav__item {
+    display: block;
+    padding: 12px 24px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+#menu__toggle:checked ~ .menu__btn > span {
+    transform: rotate(45deg);
+
+    &::before {
+        top: 0;
+        transform: rotate(0);
+    }
+    &::after {
+        top: 0;
+        transform: rotate(90deg);
+    }
+}
+
+#menu__toggle:checked ~ .nav__list {
+    min-width: 200px;
+    visibility: visible;
+    opacity: 1;
+    transition: all 0.3s ease-in-out;
+    transition-delay: 0.1s;
+}
+
+/*Accordion*/
+#chck1,
+#chck2 {
+    position: absolute;
+    opacity: 0;
+    z-index: -1;
+}
+
+.tab {
+    width: 100%;
+    overflow: hidden;
+
+    &-label {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        background: $bg-acc;
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+            background: $bg-acc-active;
+        }
+        &::after {
+            content: "\2192";
+            width: 1em;
+            height: 1em;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+}
+
+.tab-content {
+    max-height: 0;
+    padding: 0 1em;
+    transition: all 0.3s ease-in-out;
+}
+
+input:checked + .tab-label {
+    background: $bg-aside-active;
+
+    &::after {
+        transform: rotate(90deg);
+    }
+}
+
+input:checked ~ .tab-content {
+    max-height: 100vh;
+    padding: 1em;
+}
+
+/*Dropdown*/
+.dropbtn {
+    background-color: $bg-dropdn;
+    color: $bg-main;
+    padding: 16px;
+    border: none;
+    min-width: 100%;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    min-width: 160px;
+
+    &-content {
+        display: none;
+        position: absolute;
+        background-color: $bg-main;
+        min-width: 160px;
+        @include box-shad(0px 8px 16px 0px $bg-main);
+        z-index: 1;
+
+        a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+
+            &:hover {
+                background-color: $bg-main;
+            }
+        }
+    }
+}
+
+.dropdown:hover {
+    .dropdown-content {
+        display: block;
+        transition: all 1s ease-in-out;
+    }
+    .dropbtn {
+        background-color: $bg-dropdn-active;
+        transition: all 0.3s ease-in-out;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .wrapper {
+        flex-direction: column;
+
+        &__content {
+            flex-direction: column-reverse;
+        }
+    }
+
+    #menu__toggle ~ .nav__list {
+        height: 50px;
+        min-width: 100%;
+    }
+
+    #menu__toggle:checked ~ .nav__list {
+        height: auto;
+    }
+
+    .header {
+        flex-flow: column;
+        gap: 10px;
+        padding-bottom: 0;
+    }
+
+    .dropdown {
+        min-width: 100%;
+
+        &-content {
+            position: relative;
+            box-shadow: none;
+        }
+
+        &:focus {
+            .dropdown-content {
+                display: block;
+                transition: all 0.3s ease-in-out;
+            }
+            .dropbtn {
+                background-color: $bg-dropdn-active;
+                transition: all 0.3s ease-in-out;
+            }
+        }
+    }
+}

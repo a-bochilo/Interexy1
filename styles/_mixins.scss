@@ -1,0 +1,5 @@
+@mixin box-shad($prop) {
+    -webkit-box-shadow: $prop;
+    -moz-box-shadow: $prop;
+    box-shadow: $prop;
+}
