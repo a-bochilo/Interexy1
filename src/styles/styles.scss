@@ -22,7 +22,7 @@ main div.wrapper {
 }
 
 nav {
-    .navigation {
+    &.navigation {
         position: relative;
         background-color: $bg-nav;
         transition: all 0.3s ease-in-out;

@@ -5,7 +5,7 @@ let name =
     process.env.NODE_ENV === "production" ? "index_[contenthash]" : "index";
 
 const config = {
-    entry: "./app.js",
+    entry: "./src/app.js",
     module: {
         rules: [
             { test: /\.css$/, use: ["style-loader", "css-loader"] },
@@ -25,7 +25,7 @@ const config = {
             hash: true,
             title: "Web-pack test",
             filename: `${name}.html`,
-            template: "./index.html",
+            template: "./src/index.html",
         }),
         new MiniCssExtractPlugin(),
     ],
@@ -37,5 +37,4 @@ if (process.env.NODE_ENV === "production") {
     config.devtool = "source-map";
 }
 
-console.log(JSON.stringify(config));
 module.exports = config;
