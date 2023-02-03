@@ -4,10 +4,10 @@
     "description": "interexy-webpack-test",
     "private": true,
     "scripts": {
-        "start": "SET NODE_ENV=development&& webpack-dev-server",
+        "start": "webpack-dev-server",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "SET NODE_ENV=production&& webpack",
-        "dev": "SET NODE_ENV=development&& webpack"
+        "build": "webpack --config webpack.prod.js",
+        "build:dev": "webpack --config webpack.dev.js"
     },
     "repository": {
         "type": "git",
@@ -25,12 +25,15 @@
     "homepage": "https://github.com/a-bochilo/Interexy1#readme",
     "dependencies": {
         "css-loader": "^6.7.3",
+        "dotenv": "^16.0.3",
         "sass": "^1.58.0",
         "sass-loader": "^13.2.0",
-        "source-map": "^0.7.4"
+        "source-map": "^0.7.4",
+        "webpack-merge": "^5.8.0"
     },
     "devDependencies": {
         "css-loader": "^6.7.3",
+        "dotenv": "^16.0.3",
         "html-webpack-plugin": "^5.5.0",
         "mini-css-extract-plugin": "^2.7.2",
         "sass": "^1.58.0",

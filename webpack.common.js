@@ -1,10 +1,8 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-let name =
-    process.env.NODE_ENV === "production" ? "index_[contenthash]" : "index";
+require("dotenv").config();
 
-const config = {
+module.exports = {
     entry: "./src/app.js",
     module: {
         rules: [
@@ -15,26 +13,13 @@ const config = {
             },
         ],
     },
-    output: {
-        path: path.resolve(__dirname, "build"),
-        filename: `${name}.js`,
-        clean: true,
-    },
     plugins: [
         new HtmlWebpackPlugin({
             hash: true,
             title: "Web-pack test",
-            filename: `${name}.html`,
+            filename: "index.html",
             template: "./src/index.html",
         }),
         new MiniCssExtractPlugin(),
     ],
-    mode: "development",
 };
-
-if (process.env.NODE_ENV === "production") {
-    config.mode = "production";
-    config.devtool = "source-map";
-}
-
-module.exports = config;
