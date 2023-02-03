@@ -1,6 +1,8 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+let name =
+    process.env.NODE_ENV === "production" ? "index_[contenthash]" : "index";
 
 const config = {
     entry: "./app.js",
@@ -15,24 +17,23 @@ const config = {
     },
     output: {
         path: path.resolve(__dirname, "build"),
-        filename: "index.js",
+        filename: `${name}.js`,
         clean: true,
     },
     plugins: [
         new HtmlWebpackPlugin({
             hash: true,
             title: "Web-pack test",
-            filename: "index.html",
+            filename: `${name}.html`,
             template: "./index.html",
         }),
         new MiniCssExtractPlugin(),
     ],
-    mode: process.env.NODE_ENV == "production" ? "production" : "development",
+    mode: "development",
 };
 
-console.log(process.env.NODE_ENV);
-if (process.env.NODE_ENV === 'production') {
-    console.log("Hello");
+if (process.env.NODE_ENV === "production") {
+    config.mode = "production";
     config.devtool = "source-map";
 }
 
