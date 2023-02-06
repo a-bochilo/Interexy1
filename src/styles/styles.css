@@ -66,16 +66,15 @@ div.content {
   flex-grow: 1;
 }
 .article:first-child {
-  min-width: 815px;
-  min-height: 100px;
+  min-width: 400px;
   position: relative;
 }
 .article__runner {
   position: relative;
-  height: 80px;
+  height: 100%;
   width: 80px;
-  background-color: #516644;
-  animation: 4s linear 0s infinite alternate div-run;
+  background-color: #f97f7f;
+  animation: 2s linear 0s infinite alternate div-run;
 }
 @keyframes div-run {
   from {

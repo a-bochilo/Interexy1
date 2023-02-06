@@ -69,17 +69,16 @@ div.content {
     flex-grow: 1;
 
     &:first-child {
-        min-width: 815px;
-        min-height: 100px;
+        min-width: 400px;
         position: relative;
     }
 
     &__runner {
         position: relative;
-        height: 80px;
+        height: 100%;
         width: 80px;
-        background-color: $bg-header;
-        animation: 4s linear 0s infinite alternate div-run;
+        background-color: $bg-acc;
+        animation: 2s linear 0s infinite alternate div-run;
     }
 
     @keyframes div-run {
