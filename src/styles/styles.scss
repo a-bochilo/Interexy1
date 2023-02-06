@@ -68,6 +68,30 @@ div.content {
     justify-content: center;
     flex-grow: 1;
 
+    &:first-child {
+        min-width: 815px;
+        min-height: 100px;
+        position: relative;
+    }
+
+    &__runner {
+        position: relative;
+        height: 80px;
+        width: 80px;
+        background-color: $bg-header;
+        animation: 4s linear 0s infinite alternate div-run;
+    }
+
+    @keyframes div-run {
+        from {
+            left: 0;
+        }
+        to {
+            left: 100%;
+            translate: -100%;
+        }
+    }
+
     &__wrapper {
         display: flex;
         flex-wrap: wrap;
