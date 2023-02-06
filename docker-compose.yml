@@ -6,11 +6,8 @@ services:
     db:
         image: postgres:latest
         container_name: pgsdb
-        environment:
-            POSTGRES_USER: "user"
-            POSTGRES_PASSWORD: "secret"
-            POSTGRES_DB: "base123"
-            PGADMIN_LISTEN_ADDRESS: 0.0.0.0
+        env_file:
+            - ./src/env/db.env
         volumes:
             - data:/var/lib/postgresql/data
         ports:
