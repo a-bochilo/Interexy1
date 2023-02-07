@@ -1,4 +1,4 @@
-const workerF = (num) => {
+const workerF = async (num) => {
     const worker = new Worker("./worker.js");
     const button = document.querySelector(".header .worker");
     button.addEventListener("click", () => worker.postMessage(num));
@@ -131,26 +131,38 @@ const animationRAF2 = (selector, speed) => {
     let movingSpeed = speed;
 
     let progress = 0;
-    let start = 0;
+    let totalDuration = 0;
+    let sum = 0;
 
-    const step = (timeStamp) => {
+    const step = (time) => {
         requestAnimationFrame(step);
-        let deltaT = timeStamp - (start || timeStamp);
+        let deltaT = time - (totalDuration || time);
+        sum += deltaT;
+        console
+            .log
+            // `tot:${totalDuration}, step:${time}, delt:${deltaT}, sum ${sum}`
+            ();
 
-        start = timeStamp;
+        totalDuration = time;
         progress += movingSpeed * ((deltaT / 1000) * 60);
-
-        move(progress);
 
         if (progress > range) {
             progress = range;
-            movingSpeed *= -1;
         } else if (progress < 0) {
-            movingSpeed *= -1;
             progress = 0;
         }
+        if (sum > 1 / 60) {
+            sum = 0;
+            // console.log("MOVE");
+            move(progress);
+        }
+
+        if (progress === range || progress === 0) {
+            movingSpeed *= -1;
+        }
     };
-    requestAnimationFrame(step);
+    let id = requestAnimationFrame(step);
+    window.blur(() => cancelAnimationFrame(id));
 };
 
 window.onload = () => {

@@ -212,7 +212,8 @@ div.content {
 
 /*Accordion*/
 #chck1,
-#chck2 {
+#chck2,
+#chck3 {
   position: absolute;
   opacity: 0;
   z-index: -1;
@@ -336,6 +337,42 @@ input:checked ~ .tab-content {
     background-color: #5876c9;
     transition: all 0.3s ease-in-out;
   }
+}
+#JSON-list {
+  display: none;
+}
+
+input:checked ~ #JSON-list {
+  display: block;
+  position: relative;
+}
+input:checked ~ #JSON-list input {
+  width: 120px;
+  padding: 5px;
+}
+input:checked ~ #JSON-list ul {
+  display: none;
+  color: black;
+  width: 100%;
+}
+input:checked ~ #JSON-list ul.show {
+  display: block;
+  position: absolute;
+  background-color: white;
+  height: max-content;
+  width: 120px;
+}
+input:checked ~ #JSON-list ul.show li {
+  display: block;
+  width: 120px;
+  padding: 5px;
+}
+input:checked ~ #JSON-list ul.show li:hover {
+  background-color: blue;
+}
+
+.tab:has(.show) {
+  overflow: visible;
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -227,7 +227,8 @@ div.content {
 
 /*Accordion*/
 #chck1,
-#chck2 {
+#chck2,
+#chck3 {
     position: absolute;
     opacity: 0;
     z-index: -1;
@@ -366,4 +367,51 @@ input:checked ~ .tab-content {
             }
         }
     }
+}
+
+// #JSON-list ul.show,
+// #JSON-list ul {
+//     display: none;
+//     li {
+//         display: none;
+//     }
+// }
+
+#JSON-list {
+    display: none;
+}
+
+input:checked ~ #JSON-list {
+    display: block;
+    position: relative;
+
+    input {
+        width: 120px;
+        padding: 5px;
+    }
+    ul {
+        display: none;
+        color: black;
+        width: 100%;
+        &.show {
+            display: block;
+            position: absolute;
+            background-color: white;
+            height: max-content;
+            width: 120px;
+
+            li {
+                display: block;
+                width: 120px;
+                padding: 5px;
+                &:hover {
+                    background-color: blue;
+                }
+            }
+        }
+    }
+}
+
+.tab:has(.show) {
+    overflow: visible;
 }

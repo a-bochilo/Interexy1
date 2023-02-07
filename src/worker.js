@@ -17,5 +17,4 @@ const hardCalc = (num) => {
 onmessage = (e) => {
     const result = hardCalc(e.data);
     postMessage(result);
-    close();
 };
