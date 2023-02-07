@@ -1,17 +1,56 @@
-const animationVSInterval = (selector, duration) => {
+const workerF = (num) => {
+    const worker = new Worker("./worker.js");
+    const button = document.querySelector(".header .worker");
+    button.addEventListener("click", () => worker.postMessage(num));
+    worker.onmessage = (e) => {
+        console.log(e.data);
+    };
+};
+
+const nonWorkerF = (num) => {
+    const button = document.querySelector(".header .non-worker");
+    const hardCalc = (num) => {
+        console.log("NonWorker started");
+        const start = Date.now();
+        let result = 5;
+        for (let i = 1; i < num; i++) {
+            result = result * 1.0001 + i / 2;
+            for (let k = i; k < num; k++) {
+                result += 1;
+                for (let j = 1; j < k; j++) {
+                    result += 1;
+                }
+            }
+        }
+        return `NonWorker result: ${Math.round(result)}, time: ${
+            Date.now() - start
+        }`;
+    };
+    button.addEventListener("click", () => {
+        console.log(hardCalc(num));
+    });
+};
+
+const getRunnerAndRange = (selector) => {
     const runner = document.querySelector(selector);
     const runnerWidth = runner.getBoundingClientRect().width;
     const parentPadding = parseInt(
         getComputedStyle(runner.parentNode).paddingLeft
     );
     const parentWidth = runner.parentNode.clientWidth - 2 * parentPadding;
+    let range = parentWidth - runnerWidth;
+    return { runner, range };
+};
+
+const animationVSInterval = (selector, duration) => {
+    const { runner, range } = getRunnerAndRange(selector);
 
     let left = 0;
-    let delta = (parentWidth - runnerWidth) / (duration * 100);
+    let delta = range / (duration * 100);
 
     const move = () => {
         left += delta;
-        if (left + runnerWidth > parentWidth || left < 0) {
+        if (left > range || left < 0) {
             delta *= -1;
         } else {
             runner.style.translate = left + "px";
@@ -21,14 +60,8 @@ const animationVSInterval = (selector, duration) => {
     setInterval(() => move(), 10);
 };
 
-// const animationRFA = (selector, duration) => {
-//     const runner = document.querySelector(selector);
-//     const runnerWidth = runner.getBoundingClientRect().width;
-//     const parentPadding = parseInt(
-//         getComputedStyle(runner.parentNode).paddingLeft
-//     );
-//     const parentWidth = runner.parentNode.clientWidth - 2 * parentPadding;
-//     let range = parentWidth - runnerWidth;
+// const animationRAF = (selector, duration) => {
+//     const { runner, range } = getRunnerAndRange(selector);
 
 //     const move = (progress) => {
 //         runner.style.translate = progress + "px";
@@ -37,7 +70,7 @@ const animationVSInterval = (selector, duration) => {
 //     let dir = 1;
 
 //     requestAnimationFrame(function rafAnimation(time) {
-//         let timeFract = (time - start) / duration;
+//         let timeFract = (time - start) / (duration * 1000);
 //         if (timeFract > 1 && dir > 0) {
 //             timeFract = 1;
 //         } else if (timeFract > 1 && dir < 0) {
@@ -60,14 +93,8 @@ const animationVSInterval = (selector, duration) => {
 //     });
 // };
 
-const animationRFA = (selector, duration) => {
-    const runner = document.querySelector(selector);
-    const runnerWidth = runner.getBoundingClientRect().width;
-    const parentPadding = parseInt(
-        getComputedStyle(runner.parentNode).paddingLeft
-    );
-    const parentWidth = runner.parentNode.clientWidth - 2 * parentPadding;
-    let range = parentWidth - runnerWidth;
+const animationRAF = (selector, duration) => {
+    const { runner, range } = getRunnerAndRange(selector);
 
     const move = (progress) => {
         runner.style.translate = progress + "px";
@@ -77,7 +104,7 @@ const animationRFA = (selector, duration) => {
 
     requestAnimationFrame(function rafAnimation() {
         let time = Date.now();
-        let timeFract = (time - start) / duration;
+        let timeFract = (time - start) / (duration * 1000);
         if (timeFract >= 1 && dir > 0) {
             timeFract = 1;
         } else if (timeFract >= 1 && dir < 0) {
@@ -100,22 +127,16 @@ const animationRFA = (selector, duration) => {
     });
 };
 
-const animationRFA2 = (selector, speed) => {
-    const runner = document.querySelector(selector);
-    const runnerWidth = runner.getBoundingClientRect().width;
-    const parentPadding = parseInt(
-        getComputedStyle(runner.parentNode).paddingLeft
-    );
-    const parentWidth = runner.parentNode.clientWidth - 2 * parentPadding;
-    let range = parentWidth - runnerWidth;
+const animationRAF2 = (selector, speed) => {
+    const { runner, range } = getRunnerAndRange(selector);
 
     let movingSpeed = speed;
 
     let progress = 0;
     let start = 0;
 
-    const move = (timeStamp) => {
-        requestAnimationFrame(move);
+    const step = (timeStamp) => {
+        requestAnimationFrame(step);
         let deltaT = timeStamp - (start || timeStamp);
 
         start = timeStamp;
@@ -127,11 +148,13 @@ const animationRFA2 = (selector, speed) => {
             movingSpeed *= -1;
         }
     };
-    requestAnimationFrame(move);
+    requestAnimationFrame(step);
 };
 
 window.onload = () => {
     animationVSInterval("#js-runner", 2);
-    animationRFA("#js-runner-raf", 2000);
-    animationRFA2("#js-runner-raf2", 2);
+    animationRAF("#js-runner-raf", 2);
+    animationRAF2("#js-runner-raf2", 2);
+    workerF(2000);
+    nonWorkerF(2000);
 };
