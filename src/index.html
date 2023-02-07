@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <link rel="stylesheet" href="./styles/styles.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="./animation.js"></script>
         <title><%= htmlWebpackPlugin.options.title %></title>
     </head>
     <body>
@@ -41,43 +42,25 @@
                     <div class="wrapper__content">
                         <section class="article__wrapper">
                             <article class="article">
-                                <div class="article__runner"></div>
+                                <div class="article__runner">CSS</div>
                             </article>
                             <article class="article">
-                                Lorem ipsum dolor, sit amet consectetur
-                                adipisicing elit. Exercitationem at mollitia
-                                explicabo vero rem asperiores dolorum debitis
-                                eum ipsam. Animi magnam voluptates officia
-                                veniam aut, odit repellat tenetur minima
-                                suscipit? Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Exercitationem at
-                                mollitia explicabo vero rem asperiores dolorum
-                                debitis eum ipsam. Animi magnam voluptates
-                                officia veniam aut, odit repellat tenetur minima
-                                suscipit? Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Exercitationem at
-                                mollitia explicabo vero rem asperiores dolorum
-                                debitis eum ipsam. Animi magnam voluptates
-                                officia veniam aut, odit repellat tenetur minima
-                                suscipit?
+                                <div id="js-runner" class="article__runner">
+                                    JS
+                                </div>
                             </article>
                             <article class="article">
-                                Lorem ipsum dolor, sit amet consectetur
-                                adipisicing elit. Exercitationem at mollitia
-                                explicabo vero rem asperiores dolorum debitis
-                                eum ipsam. Animi magnam voluptates officia
-                                veniam aut, odit repellat tenetur minima
-                                suscipit? Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Exercitationem at
-                                mollitia explicabo vero rem asperiores dolorum
-                                debitis eum ipsam. Animi magnam voluptates
-                                officia veniam aut, odit repellat tenetur minima
-                                suscipit? Lorem ipsum dolor, sit amet
-                                consectetur adipisicing elit. Exercitationem at
-                                mollitia explicabo vero rem asperiores dolorum
-                                debitis eum ipsam. Animi magnam voluptates
-                                officia veniam aut, odit repellat tenetur minima
-                                suscipit?
+                                <div id="js-runner-raf" class="article__runner">
+                                    JS RAF
+                                </div>
+                            </article>
+                            <article class="article">
+                                <div
+                                    id="js-runner-raf2"
+                                    class="article__runner"
+                                >
+                                    JS RAF2
+                                </div>
                             </article>
                             <article class="article">
                                 Lorem ipsum dolor, sit amet consectetur
