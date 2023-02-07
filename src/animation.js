@@ -31,7 +31,7 @@ const nonWorkerF = (num) => {
     });
 };
 
-const getRunnerAndRange = (selector) => {
+const getRunnerRangeMove = (selector) => {
     const runner = document.querySelector(selector);
     const runnerWidth = runner.getBoundingClientRect().width;
     const parentPadding = parseInt(
@@ -39,11 +39,15 @@ const getRunnerAndRange = (selector) => {
     );
     const parentWidth = runner.parentNode.clientWidth - 2 * parentPadding;
     let range = parentWidth - runnerWidth;
-    return { runner, range };
+
+    const move = (progress) => {
+        runner.style.translate = progress + "px";
+    };
+    return { runner, range, move };
 };
 
 const animationVSInterval = (selector, duration) => {
-    const { runner, range } = getRunnerAndRange(selector);
+    const { runner, range } = getRunnerRangeMove(selector);
 
     let left = 0;
     let delta = range / (duration * 100);
@@ -61,11 +65,8 @@ const animationVSInterval = (selector, duration) => {
 };
 
 // const animationRAF = (selector, duration) => {
-//     const { runner, range } = getRunnerAndRange(selector);
+//     const { range, move } = getRunnerRangeMove(selector);
 
-//     const move = (progress) => {
-//         runner.style.translate = progress + "px";
-//     };
 //     let start = performance.now();
 //     let dir = 1;
 
@@ -94,11 +95,8 @@ const animationVSInterval = (selector, duration) => {
 // };
 
 const animationRAF = (selector, duration) => {
-    const { runner, range } = getRunnerAndRange(selector);
+    const { range, move } = getRunnerRangeMove(selector);
 
-    const move = (progress) => {
-        runner.style.translate = progress + "px";
-    };
     let start = Date.now();
     let dir = 1;
 
@@ -128,7 +126,7 @@ const animationRAF = (selector, duration) => {
 };
 
 const animationRAF2 = (selector, speed) => {
-    const { runner, range } = getRunnerAndRange(selector);
+    const { range, move } = getRunnerRangeMove(selector);
 
     let movingSpeed = speed;
 
@@ -142,10 +140,14 @@ const animationRAF2 = (selector, speed) => {
         start = timeStamp;
         progress += movingSpeed * ((deltaT / 1000) * 60);
 
-        runner.style.translate = progress + "px";
+        move(progress);
 
-        if (progress > range || progress < 0) {
+        if (progress > range) {
+            progress = range;
             movingSpeed *= -1;
+        } else if (progress < 0) {
+            movingSpeed *= -1;
+            progress = 0;
         }
     };
     requestAnimationFrame(step);
