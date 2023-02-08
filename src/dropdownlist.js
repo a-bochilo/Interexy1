@@ -5,15 +5,45 @@ const fetchRickAndMortyApi = axios.create({
     headers: { "Content-Type": "application/json" },
 });
 
+fetchRickAndMortyApi.interceptors.response.use((response) => {
+    if (response.status === 200) {
+        console.log("Successful");
+    }
+    return response;
+});
+
 const getData = async (part) => {
-    const response = await fetchRickAndMortyApi.get(`${part}`);
-    const fetchedData = await response.data.results;
-    handleData("JSON-list", fetchedData);
+    try {
+        const response = await fetchRickAndMortyApi.get(`${part}`);
+        if (part.endsWith("character")) {
+            return await response.data.results;
+        } else {
+            return await response.data;
+        }
+    } catch {
+        throw new Error("Fetching error");
+    }
 };
 
-const handleData = (id, data) => {
+const appendChar = (article, charData) => {
+    const { name, image, gender, location, species, status, link } = charData;
+    article.innerHTML = `
+            <img src=${image} alt=${name}">
+            <div>
+                <h3>${name}</h3>
+                <p><span>Gender:</span>${gender}</p>
+                <p><span>Location:</span>${location.name}</p>
+                <p><span>Specie:</span>${species}</p>
+                <p><span>Status:</span>${status}</p>
+                <p><span>Link:</span><a href=${link}>Click here</a></p>
+            </div>
+        `;
+};
+
+const handleCharList = (id) => {
     const list = document.querySelector(`#${id} ul`);
     const input = document.querySelector(`#${id} input`);
+    let data;
     let elemsToShow = [];
 
     const prepareArr = (filterStr) => {
@@ -32,51 +62,19 @@ const handleData = (id, data) => {
         list.classList.add("show");
     };
 
-    const appendChar = (article, charData) => {
-        const { name, image, gender, location, species, status, link } =
-            charData;
-        article.innerHTML = `
-            <img src=${image} alt=${name}">
-            <div>
-                <h3>${name}</h3>
-                <p><span>Gender:</span>${gender}</p>
-                <p><span>Location:</span>${location.name}</p>
-                <p><span>Specie:</span>${species}</p>
-                <p><span>Status:</span>${status}</p>
-                <p><span>Link:</span><a href=${link}>Click here</a></p>
-            </div>
-        `;
-    };
+    input.addEventListener("focus", async (e) => {
+        data = await getData("/character");
+        prepareArr(e.target.value);
+        appendElements(elemsToShow);
+    });
 
-    const fillArticles = (collection) => {
-        const idSet = new Set();
-        while (idSet.size < 4) {
-            const id = Math.floor(Math.random() * (20 - 1 + 1) + 1);
-            idSet.add(id);
-        }
-        const randomArr = Array.from(idSet);
-        collection.forEach((el, i) => {
-            appendChar(el, data[randomArr[i]]);
-        });
-    };
-
-    const articles = document.querySelectorAll(
-        "article.article.char-info:not(#charInfo)"
-    );
-    fillArticles(articles);
-
-    list.addEventListener("click", (e) => {
+    list.addEventListener("click", async (e) => {
         const li = e.target.closest("li");
         if (!li) return;
         const charId = li.dataset.id;
-        const charData = data.filter((el) => el.id === +charId)[0];
         const article = document.getElementById("charInfo");
+        const charData = await getData(`/character/${charId}`);
         appendChar(article, charData);
-    });
-
-    input.addEventListener("focus", (e) => {
-        prepareArr(e.target.value);
-        appendElements(elemsToShow);
     });
 
     input.addEventListener("input", (e) => {
@@ -94,6 +92,27 @@ const handleData = (id, data) => {
     });
 };
 
+const fillArticles = async () => {
+    const articles = document.querySelectorAll(
+        "article.article.char-info:not(#charInfo)"
+    );
+    const idSet = new Set();
+    while (idSet.size < articles.length) {
+        const id = Math.floor(Math.random() * (826 - 1 + 1) + 1);
+        idSet.add(id);
+    }
+    const randomArr = Array.from(idSet);
+    const data = await getData(`/character/${randomArr}`);
+    articles.forEach((el, i) => {
+        appendChar(el, data[i]);
+    });
+};
+
+const initialFetching = async () => {
+    fillArticles();
+    handleCharList("JSON-list");
+};
+
 window.addEventListener("load", () => {
-    getData("/character");
+    initialFetching();
 });

@@ -1,4 +1,4 @@
-const workerF = async (num) => {
+const workerF = (num) => {
     const worker = new Worker("./worker.js");
     const button = document.querySelector(".header .worker");
     button.addEventListener("click", () => worker.postMessage(num));
