@@ -26,7 +26,7 @@ const getData = async (part) => {
 };
 
 const appendChar = (article, charData) => {
-    const { name, image, gender, location, species, status, link } = charData;
+    const { name, image, gender, location, species, status, url } = charData;
     article.innerHTML = `
             <img src=${image} alt=${name}">
             <div>
@@ -35,7 +35,7 @@ const appendChar = (article, charData) => {
                 <p><span>Location:</span>${location.name}</p>
                 <p><span>Specie:</span>${species}</p>
                 <p><span>Status:</span>${status}</p>
-                <p><span>Link:</span><a href=${link}>Click here</a></p>
+                <p><span>Link:</span><a href=${url}>Click here</a></p>
             </div>
         `;
 };
