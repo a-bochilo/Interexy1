@@ -4,7 +4,10 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 require("dotenv").config();
 
 module.exports = {
-    entry: ["./src/app.js"],
+    entry: {
+        app: "./src/app.js",
+        worker: "./src/scripts/worker.js",
+    },
     module: {
         rules: [
             { test: /\.css$/, use: ["style-loader", "css-loader"] },
@@ -20,10 +23,11 @@ module.exports = {
             title: "Interexy study project",
             filename: "index.html",
             template: "./src/index.html",
+            excludeChunks: ["worker"],
         }),
         new MiniCssExtractPlugin(),
-        new CopyWebpackPlugin({
-            patterns: [{ from: "./src/scripts/worker.js", to: "./" }],
-        }),
+        // new CopyWebpackPlugin({
+        //     patterns: [{ from: "./src/scripts/worker.js", to: "./" }],
+        // }),
     ],
 };

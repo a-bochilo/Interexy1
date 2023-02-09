@@ -15,12 +15,6 @@ const appendChar = (article, charData) => {
         `;
 };
 
-const clearList = (el, arr) => {
-    arr = [];
-    el.innerHTML = "";
-    el.classList.remove("show");
-};
-
 const handleCharList = (id) => {
     const list = document.querySelector(`#${id} ul`);
     const input = document.querySelector(`#${id} input`);
@@ -43,8 +37,14 @@ const handleCharList = (id) => {
         list.classList.add("show");
     };
 
+    const clearList = () => {
+        elemsToShow = [];
+        list.innerHTML = "";
+        list.classList.remove("show");
+    };
+
     input.addEventListener("focus", async (e) => {
-        clearList(list, elemsToShow);
+        clearList();
         data = await getData("/character");
         prepareArr(e.target.value);
         appendElements(elemsToShow);
@@ -61,7 +61,7 @@ const handleCharList = (id) => {
 
     input.addEventListener("input", (e) => {
         if (e.target.value == "") {
-            clearList(list, elemsToShow);
+            clearList();
             return;
         }
         prepareArr(e.target.value);
@@ -88,12 +88,12 @@ const handleCharList = (id) => {
 //     });
 // };
 
-const createAndPutCharArticles = async (amount) => {
+const createAndPutCharArticles = async (articlesAmount) => {
     const anchor = document.getElementById("charInfo");
-    const charsAmount = await getData("/character", true);
+    const charsRange = await getData("/character", true);
     const idSet = new Set();
-    while (idSet.size < amount) {
-        const id = Math.floor(Math.random() * (charsAmount - 1 + 1) + 1);
+    while (idSet.size < articlesAmount) {
+        const id = Math.floor(Math.random() * (charsRange - 1 + 1) + 1);
         idSet.add(id);
     }
     const data = await getData(`/character/${[...idSet]}`);
@@ -103,7 +103,6 @@ const createAndPutCharArticles = async (amount) => {
         appendChar(article, char);
         anchor.after(article);
     });
-    console.log(charsAmount);
 };
 
 window.addEventListener("load", () => {

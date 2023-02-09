@@ -7,7 +7,7 @@ module.exports = merge(common, {
     mode: "development",
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "index.js",
+        filename: "[name].js",
         clean: true,
     },
     devServer: {
