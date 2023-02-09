@@ -1,3 +1,4 @@
 import "./styles/styles.scss";
-import "./animation.js";
-import "./dropdownlist.js";
+import "./scripts/heavyF.js";
+import "./scripts/animation.js";
+import "./scripts/handleChars.js";

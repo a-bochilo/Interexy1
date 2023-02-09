@@ -1,29 +1,4 @@
-import axios from "axios";
-
-const fetchRickAndMortyApi = axios.create({
-    baseURL: "https://rickandmortyapi.com/api",
-    headers: { "Content-Type": "application/json" },
-});
-
-fetchRickAndMortyApi.interceptors.response.use((response) => {
-    if (response.status === 200) {
-        console.log("Successful");
-    }
-    return response;
-});
-
-const getData = async (part) => {
-    try {
-        const response = await fetchRickAndMortyApi.get(`${part}`);
-        if (part.endsWith("character")) {
-            return await response.data.results;
-        } else {
-            return await response.data;
-        }
-    } catch {
-        throw new Error("Fetching error");
-    }
-};
+import { getData } from "./apiRequest";
 
 const appendChar = (article, charData) => {
     const { name, image, gender, location, species, status, url } = charData;
@@ -38,6 +13,12 @@ const appendChar = (article, charData) => {
                 <p><span>Link:</span><a href=${url}>Click here</a></p>
             </div>
         `;
+};
+
+const clearList = (el, arr) => {
+    arr = [];
+    el.innerHTML = "";
+    el.classList.remove("show");
 };
 
 const handleCharList = (id) => {
@@ -63,6 +44,7 @@ const handleCharList = (id) => {
     };
 
     input.addEventListener("focus", async (e) => {
+        clearList(list, elemsToShow);
         data = await getData("/character");
         prepareArr(e.target.value);
         appendElements(elemsToShow);
@@ -79,9 +61,7 @@ const handleCharList = (id) => {
 
     input.addEventListener("input", (e) => {
         if (e.target.value == "") {
-            elemsToShow = [];
-            list.innerHTML = "";
-            list.classList.remove("show");
+            clearList(list, elemsToShow);
             return;
         }
         prepareArr(e.target.value);
@@ -96,13 +76,14 @@ const fillArticles = async () => {
     const articles = document.querySelectorAll(
         "article.article.char-info:not(#charInfo)"
     );
+    const charsAmount = await getData("/character", true);
+    console.log(charsAmount);
     const idSet = new Set();
     while (idSet.size < articles.length) {
-        const id = Math.floor(Math.random() * (826 - 1 + 1) + 1);
+        const id = Math.floor(Math.random() * (charsAmount - 1 + 1) + 1);
         idSet.add(id);
     }
-    const randomArr = Array.from(idSet);
-    const data = await getData(`/character/${randomArr}`);
+    const data = await getData(`/character/${[...idSet]}`);
     articles.forEach((el, i) => {
         appendChar(el, data[i]);
     });

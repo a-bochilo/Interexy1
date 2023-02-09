@@ -1,37 +1,4 @@
-const workerF = (num) => {
-    const worker = new Worker("./worker.js");
-    const button = document.querySelector(".header .worker");
-    button.addEventListener("click", () => worker.postMessage(num));
-    worker.onmessage = (e) => {
-        console.log(e.data);
-    };
-};
-
-const nonWorkerF = (num) => {
-    const button = document.querySelector(".header .non-worker");
-    const hardCalc = (num) => {
-        console.log("NonWorker started");
-        const start = Date.now();
-        let result = 5;
-        for (let i = 1; i < num; i++) {
-            result = result * 1.0001 + i / 2;
-            for (let k = i; k < num; k++) {
-                result += 1;
-                for (let j = 1; j < k; j++) {
-                    result += 1;
-                }
-            }
-        }
-        return `NonWorker result: ${Math.round(result)}, time: ${
-            Date.now() - start
-        }`;
-    };
-    button.addEventListener("click", () => {
-        console.log(hardCalc(num));
-    });
-};
-
-const getRunnerRangeMove = (selector) => {
+const getRunnerAndRangeAndMove = (selector) => {
     const runner = document.querySelector(selector);
     const runnerWidth = runner.getBoundingClientRect().width;
     const parentPadding = parseInt(
@@ -47,7 +14,7 @@ const getRunnerRangeMove = (selector) => {
 };
 
 const animationVSInterval = (selector, duration) => {
-    const { runner, range } = getRunnerRangeMove(selector);
+    const { runner, range } = getRunnerAndRangeAndMove(selector);
 
     let left = 0;
     let delta = range / (duration * 100);
@@ -95,7 +62,7 @@ const animationVSInterval = (selector, duration) => {
 // };
 
 const animationRAF = (selector, duration) => {
-    const { range, move } = getRunnerRangeMove(selector);
+    const { range, move } = getRunnerAndRangeAndMove(selector);
 
     let start = Date.now();
     let dir = 1;
@@ -126,7 +93,7 @@ const animationRAF = (selector, duration) => {
 };
 
 const animationRAF2 = (selector, speed) => {
-    const { range, move } = getRunnerRangeMove(selector);
+    const { range, move } = getRunnerAndRangeAndMove(selector);
 
     let movingSpeed = speed;
 
@@ -169,6 +136,4 @@ window.onload = () => {
     animationVSInterval("#js-runner", 2);
     animationRAF("#js-runner-raf", 2);
     animationRAF2("#js-runner-raf2", 2);
-    workerF(2000);
-    nonWorkerF(2000);
 };

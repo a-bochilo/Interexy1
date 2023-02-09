@@ -17,13 +17,13 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             hash: true,
-            title: "Web-pack test",
+            title: "Interexy study project",
             filename: "index.html",
             template: "./src/index.html",
         }),
         new MiniCssExtractPlugin(),
         new CopyWebpackPlugin({
-            patterns: [{ from: "./src/worker.js", to: "./" }],
+            patterns: [{ from: "./src/scripts/worker.js", to: "./" }],
         }),
     ],
 };
