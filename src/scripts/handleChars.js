@@ -77,7 +77,6 @@ const fillArticles = async () => {
         "article.article.char-info:not(#charInfo)"
     );
     const charsAmount = await getData("/character", true);
-    console.log(charsAmount);
     const idSet = new Set();
     while (idSet.size < articles.length) {
         const id = Math.floor(Math.random() * (charsAmount - 1 + 1) + 1);
