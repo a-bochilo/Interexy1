@@ -72,27 +72,42 @@ const handleCharList = (id) => {
     });
 };
 
-const fillArticles = async () => {
-    const articles = document.querySelectorAll(
-        "article.article.char-info:not(#charInfo)"
-    );
+// const fillExistedArticles = async () => {
+//     const articles = document.querySelectorAll(
+//         "article.article.char-info:not(#charInfo)"
+//     );
+//     const charsAmount = await getData("/character", true);
+//     const idSet = new Set();
+//     while (idSet.size < articles.length) {
+//         const id = Math.floor(Math.random() * (charsAmount - 1 + 1) + 1);
+//         idSet.add(id);
+//     }
+//     const data = await getData(`/character/${[...idSet]}`);
+//     articles.forEach((el, i) => {
+//         appendChar(el, data[i]);
+//     });
+// };
+
+const createAndPutCharArticles = async (amount) => {
+    const anchor = document.getElementById("charInfo");
     const charsAmount = await getData("/character", true);
     const idSet = new Set();
-    while (idSet.size < articles.length) {
+    while (idSet.size < amount) {
         const id = Math.floor(Math.random() * (charsAmount - 1 + 1) + 1);
         idSet.add(id);
     }
     const data = await getData(`/character/${[...idSet]}`);
-    articles.forEach((el, i) => {
-        appendChar(el, data[i]);
+    data.forEach((char) => {
+        const article = document.createElement("article");
+        article.classList.add("article", "char-info");
+        appendChar(article, char);
+        anchor.after(article);
     });
-};
-
-const initialFetching = async () => {
-    fillArticles();
-    handleCharList("JSON-list");
+    console.log(charsAmount);
 };
 
 window.addEventListener("load", () => {
-    initialFetching();
+    // fillExistedArticles();
+    createAndPutCharArticles(5);
+    handleCharList("JSON-list");
 });
