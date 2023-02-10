@@ -1,4 +1,4 @@
-const hardCalc = (num) => {
+const hardCalc = (num: number): string => {
     console.log("Worker started");
     const start = Date.now();
     let result = 5;

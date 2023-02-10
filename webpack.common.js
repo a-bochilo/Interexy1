@@ -1,16 +1,20 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
 require("dotenv").config();
 
 module.exports = {
     entry: {
-        app: "./src/app.js",
-        worker: "./src/scripts/worker.js",
-        chartWorker: "./src/scripts/chartWorker.js",
+        app: "./src/app",
+        worker: "./src/scripts/worker",
+        chartWorker: "./src/scripts/chartWorker",
     },
     module: {
         rules: [
+            {
+                test: /\.tsx?$/,
+                use: "ts-loader",
+                exclude: /node_modules/,
+            },
             {
                 test: /\.js$/,
                 enforce: "pre",
@@ -23,6 +27,9 @@ module.exports = {
             },
         ],
     },
+    resolve: {
+        extensions: [".tsx", ".ts", ".js"],
+    },
     plugins: [
         new HtmlWebpackPlugin({
             hash: true,
@@ -32,8 +39,5 @@ module.exports = {
             excludeChunks: ["worker", "chartWorker"],
         }),
         new MiniCssExtractPlugin(),
-        // new CopyWebpackPlugin({
-        //     patterns: [{ from: "./src/scripts/worker.js", to: "./" }],
-        // }),
     ],
 };

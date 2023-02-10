@@ -1,20 +1,25 @@
-const getRunnerAndRangeAndMove = (selector) => {
-    const runner = document.querySelector(selector);
-    const runnerWidth = runner.getBoundingClientRect().width;
-    const parentPadding = parseInt(
-        getComputedStyle(runner.parentNode).paddingLeft
-    );
-    const parentWidth = runner.parentNode.clientWidth - 2 * parentPadding;
-    let range = parentWidth - runnerWidth;
-
-    const move = (progress) => {
-        runner.style.translate = progress + "px";
-    };
-    return { runner, range, move };
+const getRunnerAndRangeAndMove = (selector: string) => {
+    const runner = document.querySelector(selector) as HTMLElement | null;
+    const parent = runner?.parentNode as HTMLElement | null;
+    if (runner && parent) {
+        const runnerWidth = runner.getBoundingClientRect().width;
+        const parentPadding = parseInt(getComputedStyle(parent).paddingLeft);
+        const parentWidth = parent.clientWidth - 2 * parentPadding;
+        let range = parentWidth - runnerWidth;
+        const move = (progress: number) => {
+            runner.style.translate = progress + "px";
+        };
+        return { runner, range, move };
+    } else {
+        console.error("Could not find animation blocks");
+    }
 };
 
-const animationVSInterval = (selector, duration) => {
-    const { runner, range } = getRunnerAndRangeAndMove(selector);
+const animationVSInterval = (selector: string, duration: number): void => {
+    const propsObject = getRunnerAndRangeAndMove(selector);
+    if (!propsObject) return;
+
+    const { runner, range } = propsObject;
 
     let left = 0;
     let delta = range / (duration * 100);
@@ -24,7 +29,7 @@ const animationVSInterval = (selector, duration) => {
         if (left > range || left < 0) {
             delta *= -1;
         } else {
-            runner.style.translate = left + "px";
+            runner.style.translate = `${left}px`;
         }
     };
 
@@ -61,27 +66,32 @@ const animationVSInterval = (selector, duration) => {
 //     });
 // };
 
-const animationRAF = (selector, duration) => {
-    const { range, move } = getRunnerAndRangeAndMove(selector);
+const animationRAF = (selector: string, duration: number) => {
+    const propsObject = getRunnerAndRangeAndMove(selector);
+    if (!propsObject) return;
+    const { range, move } = propsObject;
 
     let start = Date.now();
-    let dir = 1;
+    let direction: "forward" | "backward" = "forward";
 
     requestAnimationFrame(function rafAnimation() {
         let time = Date.now();
         let timeFract = (time - start) / (duration * 1000);
-        if (timeFract >= 1 && dir > 0) {
+        if (timeFract >= 1 && direction === "forward") {
             timeFract = 1;
-        } else if (timeFract >= 1 && dir < 0) {
+        } else if (timeFract >= 1 && direction === "backward") {
             timeFract = 0;
         }
-        let progress = dir > 0 ? range * timeFract : range - range * timeFract;
+        let progress =
+            direction === "forward"
+                ? range * timeFract
+                : range - range * timeFract;
         if (timeFract === 1) {
             start = time;
-            dir = -1;
+            direction = "backward";
         }
         if (timeFract === 0) {
-            dir = 1;
+            direction = "forward";
             start = time;
             progress = 0;
         }
@@ -92,8 +102,10 @@ const animationRAF = (selector, duration) => {
     });
 };
 
-const animationRAF2 = (selector, speed) => {
-    const { range, move } = getRunnerAndRangeAndMove(selector);
+const animationRAF2 = (selector: string, speed: number) => {
+    const propsObject = getRunnerAndRangeAndMove(selector);
+    if (!propsObject) return;
+    const { range, move } = propsObject;
 
     let movingSpeed = speed;
 
@@ -101,15 +113,10 @@ const animationRAF2 = (selector, speed) => {
     let totalDuration = 0;
     let sum = 0;
 
-    const step = (time) => {
+    const step = (time: number) => {
         requestAnimationFrame(step);
         let deltaT = time - (totalDuration || time);
         sum += deltaT;
-        console
-            .log
-            // `tot:${totalDuration}, step:${time}, delt:${deltaT}, sum ${sum}`
-            ();
-
         totalDuration = time;
         progress += movingSpeed * ((deltaT / 1000) * 60);
 
@@ -120,7 +127,6 @@ const animationRAF2 = (selector, speed) => {
         }
         if (sum > 1 / 60) {
             sum = 0;
-            // console.log("MOVE");
             move(progress);
         }
 
@@ -129,7 +135,7 @@ const animationRAF2 = (selector, speed) => {
         }
     };
     let id = requestAnimationFrame(step);
-    window.blur(() => cancelAnimationFrame(id));
+    window.blur = () => cancelAnimationFrame(id);
 };
 
 window.onload = () => {

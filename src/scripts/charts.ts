@@ -1,12 +1,20 @@
 import Chart from "chart.js/auto";
 
-const createChart = async (amount, range) => {
-    const parentElement = document.querySelector("section.article__wrapper");
+export interface IChartWorkerProps {
+    amount: number;
+    range: number;
+}
+
+const createChart = async (amount: number, range: number) => {
+    const parentElement = document.querySelector(
+        "section.article__wrapper"
+    ) as HTMLElement | null;
+    if (!parentElement) return;
     const chart = document.createElement("canvas");
     chart.id = "chart";
     const chartWorker = new Worker("./chartWorker.js");
     chartWorker.postMessage({ amount, range });
-    chartWorker.onmessage = (e) => {
+    chartWorker.onmessage = (e: MessageEvent<number[]>) => {
         if (e.data) parentElement.prepend(chart);
         new Chart(chart, {
             type: "line",
@@ -16,12 +24,11 @@ const createChart = async (amount, range) => {
                     {
                         label: "My chart",
                         data: e.data,
-                        borderWidth: 1,
                         backgroundColor: "rgb(255, 0, 0)",
                         borderCapStyle: "round",
                         borderColor: "red",
                         borderWidth: 0.5,
-                        radius: 1,
+                        pointRadius: 1.5,
                         fill: {
                             target: "origin",
                             above: "rgba(0, 255, 26, 0.441)",
@@ -32,7 +39,7 @@ const createChart = async (amount, range) => {
                 ],
             },
             options: {
-                animation: true,
+                // animation: false,
                 plugins: {
                     legend: {
                         display: false,

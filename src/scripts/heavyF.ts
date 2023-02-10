@@ -1,15 +1,19 @@
-const workerF = (num) => {
+const workerFunc = (num: number) => {
     const worker = new Worker("./worker.js");
-    const button = document.querySelector(".header .worker");
-    button.addEventListener("click", () => worker.postMessage(num));
+    const button = document.querySelector(
+        ".header .worker"
+    ) as HTMLButtonElement | null;
+    button?.addEventListener("click", () => worker.postMessage(num));
     worker.onmessage = (e) => {
         console.log(e.data);
     };
 };
 
-const nonWorkerF = (num) => {
-    const button = document.querySelector(".header .non-worker");
-    const hardCalc = (num) => {
+const nonWorkerFunc = (num: number) => {
+    const button = document.querySelector(
+        ".header .non-worker"
+    ) as HTMLButtonElement | null;
+    const hardCalc = (num: number): string => {
         console.log("NonWorker started");
         const start = Date.now();
         let result = 5;
@@ -26,12 +30,12 @@ const nonWorkerF = (num) => {
             Date.now() - start
         }`;
     };
-    button.addEventListener("click", () => {
+    button?.addEventListener("click", () => {
         console.log(hardCalc(num));
     });
 };
 
 window.addEventListener("load", () => {
-    workerF(2000);
-    nonWorkerF(2000);
+    workerFunc(2000);
+    nonWorkerFunc(2000);
 });
