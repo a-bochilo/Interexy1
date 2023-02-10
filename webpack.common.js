@@ -7,9 +7,15 @@ module.exports = {
     entry: {
         app: "./src/app.js",
         worker: "./src/scripts/worker.js",
+        chartWorker: "./src/scripts/chartWorker.js",
     },
     module: {
         rules: [
+            {
+                test: /\.js$/,
+                enforce: "pre",
+                use: ["source-map-loader"],
+            },
             { test: /\.css$/, use: ["style-loader", "css-loader"] },
             {
                 test: /\.scss$/,
@@ -23,7 +29,7 @@ module.exports = {
             title: "Interexy study project",
             filename: "index.html",
             template: "./src/index.html",
-            excludeChunks: ["worker"],
+            excludeChunks: ["worker", "chartWorker"],
         }),
         new MiniCssExtractPlugin(),
         // new CopyWebpackPlugin({

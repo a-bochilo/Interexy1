@@ -408,6 +408,10 @@ input:checked ~ #JSON-list {
     overflow: visible;
 }
 
+article.article.animation {
+    min-width: 400px;
+}
+
 article.article.char-info {
     min-width: 400px;
     display: flex;
@@ -442,4 +446,11 @@ article.article.char-info {
             }
         }
     }
+}
+
+#chart {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.627);
+    max-height: 200px;
+    // color: rgba(195, 255, 0, 0.441);
 }
