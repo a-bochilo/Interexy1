@@ -54,5 +54,5 @@ const createChart = async (amount, range) => {
 };
 
 window.addEventListener("load", () => {
-    createChart(7000, 150);
+    createChart(20000, 150);
 });

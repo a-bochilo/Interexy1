@@ -9,14 +9,14 @@ const createData = ({ amount, range }) => {
 
 const dataProcessing = ({ data, range }) => {
     let processedData = [];
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i < data.length / 20; i++) {
         processedData = data
             .map(
                 (el) =>
                     Math.round(el * Math.random()) -
                     Math.round(range * 0.3 * Math.random())
             )
-            .filter((el, i) => i % 25 === 0);
+            .filter((el, i) => i % Math.round(data.length / 250) === 0);
     }
     return processedData;
 };
