@@ -51,5 +51,5 @@ const createChart = (amount, range) => {
 };
 
 window.addEventListener("load", () => {
-    createChart(200, 70);
+    createChart(200, 150);
 });
