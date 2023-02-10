@@ -8,13 +8,20 @@ const createData = ({ amount, range }) => {
 };
 
 const dataProcessing = (data) => {
-    return data.map(
-        (el) => Math.round(el * Math.random()) - Math.round(4 * Math.random())
-    );
+    let processedData = [];
+    for (let i = 0; i < data.length * 100; i++) {
+        processedData = data.map(
+            (el) =>
+                Math.round(el * Math.random()) - Math.round(4 * Math.random())
+        );
+    }
+    return processedData;
 };
 
 onmessage = (e) => {
+    const start = Date.now();
     const data = createData(e.data);
     const outputData = dataProcessing(data);
+    console.log(`${Date.now() - start}`);
     postMessage(outputData);
 };

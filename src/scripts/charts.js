@@ -29,7 +29,7 @@ const createChart = (amount, range) => {
                 ],
             },
             options: {
-                animation: false,
+                animation: true,
                 plugins: {
                     legend: {
                         display: false,
