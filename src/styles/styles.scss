@@ -450,6 +450,6 @@ article.article.char-info {
 
 #chart {
     width: 100%;
-    background-color: rgba(255, 255, 255, 0.627);
     max-height: 200px;
+    min-height: 0;
 }

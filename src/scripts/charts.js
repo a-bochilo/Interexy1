@@ -1,10 +1,13 @@
 import Chart from "chart.js/auto";
 
-const createChart = (amount, range) => {
-    const chart = document.getElementById("chart");
+const createChart = async (amount, range) => {
+    const parentElement = document.querySelector("section.article__wrapper");
+    const chart = document.createElement("canvas");
+    chart.id = "chart";
     const chartWorker = new Worker("./chartWorker.js");
     chartWorker.postMessage({ amount, range });
     chartWorker.onmessage = (e) => {
+        if (e.data) parentElement.prepend(chart);
         new Chart(chart, {
             type: "line",
             data: {
@@ -51,5 +54,5 @@ const createChart = (amount, range) => {
 };
 
 window.addEventListener("load", () => {
-    createChart(200, 150);
+    createChart(7000, 150);
 });
